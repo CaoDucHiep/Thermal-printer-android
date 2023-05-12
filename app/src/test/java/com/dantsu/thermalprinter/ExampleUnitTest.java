@@ -1,4 +1,4 @@
-package com.dantsu.thermalprinter;
+package com.caoduchiep.thermalprinter;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.dantsu.escposprinter.connection.bluetooth;
+package com.caoduchiep.escposprinter.connection.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;

@@ -1,4 +1,4 @@
-package com.dantsu.escposprinter.textparser;
+package com.caoduchiep.escposprinter.textparser;
 
 import java.util.Hashtable;
 

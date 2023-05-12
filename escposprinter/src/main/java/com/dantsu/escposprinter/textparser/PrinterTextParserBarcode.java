@@ -1,18 +1,18 @@
-package com.dantsu.escposprinter.textparser;
+package com.caoduchiep.escposprinter.textparser;
 
 import java.util.Hashtable;
 
-import com.dantsu.escposprinter.EscPosPrinter;
-import com.dantsu.escposprinter.EscPosPrinterCommands;
-import com.dantsu.escposprinter.barcode.Barcode;
-import com.dantsu.escposprinter.barcode.Barcode128;
-import com.dantsu.escposprinter.barcode.BarcodeEAN13;
-import com.dantsu.escposprinter.barcode.BarcodeEAN8;
-import com.dantsu.escposprinter.barcode.BarcodeUPCA;
-import com.dantsu.escposprinter.barcode.BarcodeUPCE;
-import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
-import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
-import com.dantsu.escposprinter.exceptions.EscPosParserException;
+import com.caoduchiep.escposprinter.EscPosPrinter;
+import com.caoduchiep.escposprinter.EscPosPrinterCommands;
+import com.caoduchiep.escposprinter.barcode.Barcode;
+import com.caoduchiep.escposprinter.barcode.Barcode128;
+import com.caoduchiep.escposprinter.barcode.BarcodeEAN13;
+import com.caoduchiep.escposprinter.barcode.BarcodeEAN8;
+import com.caoduchiep.escposprinter.barcode.BarcodeUPCA;
+import com.caoduchiep.escposprinter.barcode.BarcodeUPCE;
+import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
+import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.exceptions.EscPosParserException;
 
 public class PrinterTextParserBarcode implements IPrinterTextParserElement {
 

@@ -1,7 +1,7 @@
-package com.dantsu.escposprinter.connection.tcp;
+package com.caoduchiep.escposprinter.connection.tcp;
 
-import com.dantsu.escposprinter.connection.DeviceConnection;
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.connection.DeviceConnection;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
 
 import java.io.IOException;
 import java.net.InetAddress;

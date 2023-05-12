@@ -1,4 +1,4 @@
-package com.dantsu.escposprinter.connection.usb;
+package com.caoduchiep.escposprinter.connection.usb;
 
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;

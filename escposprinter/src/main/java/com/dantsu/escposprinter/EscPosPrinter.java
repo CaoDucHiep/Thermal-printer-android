@@ -1,15 +1,15 @@
-package com.dantsu.escposprinter;
+package com.caoduchiep.escposprinter;
 
-import com.dantsu.escposprinter.connection.DeviceConnection;
-import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
-import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
-import com.dantsu.escposprinter.exceptions.EscPosParserException;
-import com.dantsu.escposprinter.textparser.PrinterTextParser;
-import com.dantsu.escposprinter.textparser.PrinterTextParserColumn;
-import com.dantsu.escposprinter.textparser.IPrinterTextParserElement;
-import com.dantsu.escposprinter.textparser.PrinterTextParserLine;
-import com.dantsu.escposprinter.textparser.PrinterTextParserString;
+import com.caoduchiep.escposprinter.connection.DeviceConnection;
+import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.exceptions.EscPosParserException;
+import com.caoduchiep.escposprinter.textparser.PrinterTextParser;
+import com.caoduchiep.escposprinter.textparser.PrinterTextParserColumn;
+import com.caoduchiep.escposprinter.textparser.IPrinterTextParserElement;
+import com.caoduchiep.escposprinter.textparser.PrinterTextParserLine;
+import com.caoduchiep.escposprinter.textparser.PrinterTextParserString;
 
 public class EscPosPrinter extends EscPosPrinterSize {
 

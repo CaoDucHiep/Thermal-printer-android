@@ -1,4 +1,4 @@
-package com.dantsu.escposprinter.connection.bluetooth;
+package com.caoduchiep.escposprinter.connection.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothClass;
@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothDevice;
 
 import androidx.annotation.Nullable;
 
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
 
 public class BluetoothPrintersConnections extends BluetoothConnections {
 

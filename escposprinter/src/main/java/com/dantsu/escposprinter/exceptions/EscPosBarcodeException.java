@@ -1,4 +1,4 @@
-package com.dantsu.escposprinter.exceptions;
+package com.caoduchiep.escposprinter.exceptions;
 
 public class EscPosBarcodeException extends Exception {
     public EscPosBarcodeException(String errorMessage) {

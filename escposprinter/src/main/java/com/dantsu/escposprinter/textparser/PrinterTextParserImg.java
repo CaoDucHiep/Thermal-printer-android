@@ -1,14 +1,14 @@
-package com.dantsu.escposprinter.textparser;
+package com.caoduchiep.escposprinter.textparser;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import com.dantsu.escposprinter.EscPosPrinter;
-import com.dantsu.escposprinter.EscPosPrinterCommands;
-import com.dantsu.escposprinter.EscPosPrinterSize;
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
-import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.EscPosPrinter;
+import com.caoduchiep.escposprinter.EscPosPrinterCommands;
+import com.caoduchiep.escposprinter.EscPosPrinterSize;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
 
 
 public class PrinterTextParserImg implements IPrinterTextParserElement {

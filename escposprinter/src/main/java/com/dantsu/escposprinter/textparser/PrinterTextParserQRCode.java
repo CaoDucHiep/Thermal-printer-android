@@ -1,10 +1,10 @@
-package com.dantsu.escposprinter.textparser;
+package com.caoduchiep.escposprinter.textparser;
 
-import com.dantsu.escposprinter.EscPosPrinter;
-import com.dantsu.escposprinter.EscPosPrinterCommands;
-import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
-import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
-import com.dantsu.escposprinter.exceptions.EscPosParserException;
+import com.caoduchiep.escposprinter.EscPosPrinter;
+import com.caoduchiep.escposprinter.EscPosPrinterCommands;
+import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
+import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.exceptions.EscPosParserException;
 
 import java.util.Hashtable;
 

@@ -1,17 +1,17 @@
-package com.dantsu.thermalprinter.async;
+package com.caoduchiep.thermalprinter.async;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.dantsu.escposprinter.EscPosCharsetEncoding;
-import com.dantsu.escposprinter.EscPosPrinter;
-import com.dantsu.escposprinter.connection.DeviceConnection;
-import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
-import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
-import com.dantsu.escposprinter.exceptions.EscPosParserException;
+import com.caoduchiep.escposprinter.EscPosCharsetEncoding;
+import com.caoduchiep.escposprinter.EscPosPrinter;
+import com.caoduchiep.escposprinter.connection.DeviceConnection;
+import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.exceptions.EscPosParserException;
 
 import java.lang.ref.WeakReference;
 

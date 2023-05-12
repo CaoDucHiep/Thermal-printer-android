@@ -1,6 +1,6 @@
-package com.dantsu.escposprinter.connection;
+package com.caoduchiep.escposprinter.connection;
 
-import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
 
 import java.io.IOException;
 import java.io.OutputStream;
