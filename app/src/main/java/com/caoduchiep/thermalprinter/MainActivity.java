@@ -1,7 +1,6 @@
 package com.caoduchiep.thermalprinter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -12,17 +11,16 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
+//import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
+//import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -50,33 +48,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = (Button) this.findViewById(R.id.button_bluetooth_browse);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                browseBluetoothDevice();
-            }
-        });
+        button.setOnClickListener(view -> browseBluetoothDevice());
         button = (Button) findViewById(R.id.button_bluetooth);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printBluetooth();
-            }
-        });
+        button.setOnClickListener(view -> printBluetooth());
         button = (Button) this.findViewById(R.id.button_usb);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printUsb();
-            }
-        });
+        button.setOnClickListener(view -> printUsb());
         button = (Button) this.findViewById(R.id.button_tcp);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printTcp();
-            }
-        });
+        button.setOnClickListener(view -> printTcp());
 
     }
 
@@ -107,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BluetoothConnection selectedDevice;
 
+    @SuppressLint("MissingPermission")
     public void browseBluetoothDevice() {
         final BluetoothConnection[] bluetoothDevicesList = (new BluetoothPrintersConnections()).getList();
 
@@ -120,18 +99,15 @@ public class MainActivity extends AppCompatActivity {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
             alertDialog.setTitle("Bluetooth printer selection");
-            alertDialog.setItems(items, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    int index = i - 1;
-                    if (index == -1) {
-                        selectedDevice = null;
-                    } else {
-                        selectedDevice = bluetoothDevicesList[index];
-                    }
-                    Button button = (Button) findViewById(R.id.button_bluetooth_browse);
-                    button.setText(items[i]);
+            alertDialog.setItems(items, (dialogInterface, i1) -> {
+                int index = i1 - 1;
+                if (index == -1) {
+                    selectedDevice = null;
+                } else {
+                    selectedDevice = bluetoothDevicesList[index];
                 }
+                Button button = (Button) findViewById(R.id.button_bluetooth_browse);
+                button.setText(items[i1]);
             });
 
             AlertDialog alert = alertDialog.create();
@@ -302,8 +278,8 @@ public class MainActivity extends AppCompatActivity {
                 "[L]\n" +
                 "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
                 "[L]Raymond DUPONT\n" +
-                "[L]5 rue des girafes\n" +
-                "[L]31547 PERPETES\n" +
+                "[L]5 rue des giraffes\n" +
+                "[L]31547 PERPETUATES\n" +
                 "[L]Tel : +33801201456\n" +
                 "\n" +
                 "[C]<barcode type='ean13' height='10'>831254784551</barcode>\n" +

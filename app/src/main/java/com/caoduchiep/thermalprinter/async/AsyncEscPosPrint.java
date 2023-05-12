@@ -8,10 +8,10 @@ import android.os.AsyncTask;
 import com.caoduchiep.escposprinter.EscPosCharsetEncoding;
 import com.caoduchiep.escposprinter.EscPosPrinter;
 import com.caoduchiep.escposprinter.connection.DeviceConnection;
-import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
-import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
-import com.caoduchiep.escposprinter.exceptions.EscPosEncodingException;
-import com.caoduchiep.escposprinter.exceptions.EscPosParserException;
+import com.caoduchiep.escposprinter.textparser.exceptions.EscPosBarcodeException;
+import com.caoduchiep.escposprinter.textparser.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.textparser.exceptions.EscPosEncodingException;
+import com.caoduchiep.escposprinter.textparser.exceptions.EscPosParserException;
 
 import java.lang.ref.WeakReference;
 
