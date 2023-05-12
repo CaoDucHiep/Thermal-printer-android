@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.caoduchiep.escposprinter.connection.DeviceConnection;
 import com.caoduchiep.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
-import com.caoduchiep.escposprinter.textparser.exceptions.EscPosConnectionException;
+import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
 
 public class AsyncBluetoothEscPosPrint extends AsyncEscPosPrint {
     public AsyncBluetoothEscPosPrint(Context context) {
