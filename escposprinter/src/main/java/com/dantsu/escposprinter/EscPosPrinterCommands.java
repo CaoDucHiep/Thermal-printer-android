@@ -106,10 +106,9 @@ public class EscPosPrinterCommands {
      * Convert Bitmap instance to a byte array compatible with ESC/POS printer.
      *
      * @param bitmap Bitmap to be convert
-     * @param gradient false : Black and white image, true : Grayscale image
      * @return Bytes contain the image in ESC/POS command
      */
-    public static byte[] bitmapToBytes(Bitmap bitmap, boolean gradient) {
+    public static byte[] bitmapToBytes(Bitmap bitmap) {
         int
             bitmapWidth = bitmap.getWidth(),
             bitmapHeight = bitmap.getHeight(),
@@ -137,10 +136,7 @@ public class EscPosPrinterCommands {
                             green = (color >> 8) & 255,
                             blue = color & 255;
 
-                        if (
-                            (gradient && (red + green + blue) < ((greyscaleCoefficient * gradientStep + greyscaleLine) * colorLevelStep)) ||
-                                (!gradient && (red < 160 || green < 160 || blue < 160))
-                        ) {
+                        if ((red + green + blue) < ((greyscaleCoefficient * gradientStep + greyscaleLine) * colorLevelStep)) {
                             b |= 1 << (7 - k);
                         }
 
@@ -586,9 +582,9 @@ public class EscPosPrinterCommands {
             return this;
         }
 
-        byte[][] bytesToPrint = this.useEscAsteriskCommand ? EscPosPrinterCommands.convertGSv0ToEscAsterisk(image) : new byte[][]{image};
+        byte[][] bytesToPrint = this.useEscAsteriskCommand ? EscPosPrinterCommands.convertGSv0ToEscAsterisk(image) : new byte[][] {image};
 
-        for (byte[] bytes : bytesToPrint) {
+        for(byte[] bytes : bytesToPrint) {
             this.printerConnection.write(bytes);
             this.printerConnection.send();
         }

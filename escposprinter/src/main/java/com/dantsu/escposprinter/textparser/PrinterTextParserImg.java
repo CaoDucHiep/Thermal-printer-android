@@ -26,20 +26,6 @@ public class PrinterTextParserImg implements IPrinterTextParserElement {
         }
         return "";
     }
-    /**
-     * Convert Drawable instance to a hexadecimal string of the image data.
-     *
-     * @param printerSize A EscPosPrinterSize instance that will print the image.
-     * @param drawable Drawable instance to be converted.
-     * @param gradient false : Black and white image, true : Grayscale image
-     * @return A hexadecimal string of the image data. Empty string if Drawable cannot be cast to BitmapDrawable.
-     */
-    public static String bitmapToHexadecimalString(EscPosPrinterSize printerSize, Drawable drawable, boolean gradient) {
-        if (drawable instanceof BitmapDrawable) {
-            return PrinterTextParserImg.bitmapToHexadecimalString(printerSize, (BitmapDrawable) drawable, gradient);
-        }
-        return "";
-    }
     
     /**
      * Convert BitmapDrawable instance to a hexadecimal string of the image data.
@@ -51,18 +37,6 @@ public class PrinterTextParserImg implements IPrinterTextParserElement {
     public static String bitmapToHexadecimalString(EscPosPrinterSize printerSize, BitmapDrawable bitmapDrawable) {
         return PrinterTextParserImg.bitmapToHexadecimalString(printerSize, bitmapDrawable.getBitmap());
     }
-
-    /**
-     * Convert BitmapDrawable instance to a hexadecimal string of the image data.
-     *
-     * @param printerSize A EscPosPrinterSize instance that will print the image.
-     * @param bitmapDrawable BitmapDrawable instance to be converted.
-     * @param gradient false : Black and white image, true : Grayscale image
-     * @return A hexadecimal string of the image data.
-     */
-    public static String bitmapToHexadecimalString(EscPosPrinterSize printerSize, BitmapDrawable bitmapDrawable, boolean gradient) {
-        return PrinterTextParserImg.bitmapToHexadecimalString(printerSize, bitmapDrawable.getBitmap(), gradient);
-    }
     
     /**
      * Convert Bitmap instance to a hexadecimal string of the image data.
@@ -72,19 +46,7 @@ public class PrinterTextParserImg implements IPrinterTextParserElement {
      * @return A hexadecimal string of the image data.
      */
     public static String bitmapToHexadecimalString(EscPosPrinterSize printerSize, Bitmap bitmap) {
-        return PrinterTextParserImg.bitmapToHexadecimalString(printerSize, bitmap, true);
-    }
-
-    /**
-     * Convert Bitmap instance to a hexadecimal string of the image data.
-     *
-     * @param printerSize A EscPosPrinterSize instance that will print the image.
-     * @param bitmap Bitmap instance to be converted.
-     * @param gradient false : Black and white image, true : Grayscale image
-     * @return A hexadecimal string of the image data.
-     */
-    public static String bitmapToHexadecimalString(EscPosPrinterSize printerSize, Bitmap bitmap, boolean gradient) {
-        return PrinterTextParserImg.bytesToHexadecimalString(printerSize.bitmapToBytes(bitmap, gradient));
+        return PrinterTextParserImg.bytesToHexadecimalString(printerSize.bitmapToBytes(bitmap));
     }
     
     /**
@@ -98,7 +60,7 @@ public class PrinterTextParserImg implements IPrinterTextParserElement {
         for (byte aByte : bytes) {
             String hexString = Integer.toHexString(aByte & 0xFF);
             if (hexString.length() == 1) {
-                imageHexString.append("0");
+                hexString = "0" + hexString;
             }
             imageHexString.append(hexString);
         }

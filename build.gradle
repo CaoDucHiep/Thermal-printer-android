@@ -1,13 +1,17 @@
-
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:3.6.4'
     }
 }
+
+plugins {
+    id 'maven-publish'
+}
+
 
 allprojects {
     repositories {
