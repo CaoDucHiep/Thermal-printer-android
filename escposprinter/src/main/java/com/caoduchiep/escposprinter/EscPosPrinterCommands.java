@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 
 import com.caoduchiep.escposprinter.barcode.Barcode;
+import com.caoduchiep.escposprinter.charset.CharsetESP;
 import com.caoduchiep.escposprinter.connection.DeviceConnection;
 import com.caoduchiep.escposprinter.exceptions.EscPosBarcodeException;
 import com.caoduchiep.escposprinter.exceptions.EscPosConnectionException;
@@ -88,10 +89,10 @@ public class EscPosPrinterCommands {
 
     public static byte[] initGSv0Command(int bytesByLine, int bitmapHeight) {
         int
-            xH = bytesByLine / 256,
-            xL = bytesByLine - (xH * 256),
-            yH = bitmapHeight / 256,
-            yL = bitmapHeight - (yH * 256);
+                xH = bytesByLine / 256,
+                xL = bytesByLine - (xH * 256),
+                yH = bitmapHeight / 256,
+                yL = bitmapHeight - (yH * 256);
 
         byte[] imageBytes = new byte[8 + bytesByLine * bitmapHeight];
         imageBytes[0] = 0x1D;
@@ -113,31 +114,31 @@ public class EscPosPrinterCommands {
      */
     public static byte[] bitmapToBytes(Bitmap bitmap) {
         int
-            bitmapWidth = bitmap.getWidth(),
-            bitmapHeight = bitmap.getHeight(),
-            bytesByLine = (int) Math.ceil(((float) bitmapWidth) / 8f);
+                bitmapWidth = bitmap.getWidth(),
+                bitmapHeight = bitmap.getHeight(),
+                bytesByLine = (int) Math.ceil(((float) bitmapWidth) / 8f);
 
         byte[] imageBytes = EscPosPrinterCommands.initGSv0Command(bytesByLine, bitmapHeight);
 
         int i = 8,
-            greyscaleCoefficientInit = 0,
-            gradientStep = 6;
+                greyscaleCoefficientInit = 0,
+                gradientStep = 6;
 
         double
-            colorLevelStep = 765.0 / (15 * gradientStep + gradientStep - 1);
+                colorLevelStep = 765.0 / (15 * gradientStep + gradientStep - 1);
 
         for (int posY = 0; posY < bitmapHeight; posY++) {
             int greyscaleCoefficient = greyscaleCoefficientInit,
-                greyscaleLine = posY % gradientStep;
+                    greyscaleLine = posY % gradientStep;
             for (int j = 0; j < bitmapWidth; j += 8) {
                 int b = 0;
                 for (int k = 0; k < 8; k++) {
                     int posX = j + k;
                     if (posX < bitmapWidth) {
                         int color = bitmap.getPixel(posX, posY),
-                            red = (color >> 16) & 255,
-                            green = (color >> 8) & 255,
-                            blue = color & 255;
+                                red = (color >> 16) & 255,
+                                green = (color >> 8) & 255,
+                                blue = color & 255;
 
                         if ((red + green + blue) < ((greyscaleCoefficient * gradientStep + greyscaleLine) * colorLevelStep)) {
                             b |= 1 << (7 - k);
@@ -163,17 +164,17 @@ public class EscPosPrinterCommands {
 
     public static byte[][] convertGSv0ToEscAsterisk(byte[] bytes) {
         int
-            xL = bytes[4] & 0xFF,
-            xH = bytes[5] & 0xFF,
-            yL = bytes[6] & 0xFF,
-            yH = bytes[7] & 0xFF,
-            bytesByLine = xH * 256 + xL,
-            dotsByLine = bytesByLine * 8,
-            nH = dotsByLine / 256,
-            nL = dotsByLine % 256,
-            imageHeight = yH * 256 + yL,
-            imageLineHeightCount = (int) Math.ceil((double) imageHeight / 24.0),
-            imageBytesSize = 6 + bytesByLine * 24;
+                xL = bytes[4] & 0xFF,
+                xH = bytes[5] & 0xFF,
+                yL = bytes[6] & 0xFF,
+                yH = bytes[7] & 0xFF,
+                bytesByLine = xH * 256 + xL,
+                dotsByLine = bytesByLine * 8,
+                nH = dotsByLine / 256,
+                nL = dotsByLine % 256,
+                imageHeight = yH * 256 + yL,
+                imageLineHeightCount = (int) Math.ceil((double) imageHeight / 24.0),
+                imageBytesSize = 6 + bytesByLine * 24;
 
         byte[][] returnedBytes = new byte[imageLineHeightCount + 2][];
         returnedBytes[0] = EscPosPrinterCommands.LINE_SPACING_24;
@@ -187,11 +188,11 @@ public class EscPosPrinterCommands {
             imageBytes[4] = (byte) nH;
             for (int j = 5; j < imageBytes.length; ++j) {
                 int
-                    imgByte = j - 5,
-                    byteRow = imgByte % 3,
-                    pxColumn = imgByte / 3,
-                    bitColumn = 1 << (7 - pxColumn % 8),
-                    pxRow = pxBaseRow + byteRow * 8;
+                        imgByte = j - 5,
+                        byteRow = imgByte % 3,
+                        pxColumn = imgByte / 3,
+                        bitColumn = 1 << (7 - pxColumn % 8),
+                        pxRow = pxBaseRow + byteRow * 8;
                 for (int k = 0; k < 8; ++k) {
                     int indexBytes = bytesByLine * (pxRow + k) + pxColumn / 8 + 8;
 
@@ -240,13 +241,13 @@ public class EscPosPrinterCommands {
         }
 
         int
-            width = byteMatrix.getWidth(),
-            height = byteMatrix.getHeight(),
-            coefficient = Math.round((float) size / (float) width),
-            imageWidth = width * coefficient,
-            imageHeight = height * coefficient,
-            bytesByLine = (int) Math.ceil(((float) imageWidth) / 8f),
-            i = 8;
+                width = byteMatrix.getWidth(),
+                height = byteMatrix.getHeight(),
+                coefficient = Math.round((float) size / (float) width),
+                imageWidth = width * coefficient,
+                imageHeight = height * coefficient,
+                bytesByLine = (int) Math.ceil(((float) imageWidth) / 8f),
+                i = 8;
 
         if (coefficient < 1) {
             return EscPosPrinterCommands.initGSv0Command(0, 0);
@@ -462,8 +463,62 @@ public class EscPosPrinterCommands {
             textDoubleStrike = EscPosPrinterCommands.TEXT_DOUBLE_STRIKE_OFF;
         }
 
+
         try {
-            byte[] textBytes = text.getBytes(this.charsetEncoding.getName());
+            /**
+             *
+             * textTemp: Lưu lại byte[] chuỗi đã được mã hóa
+             */
+            StringBuilder textTemp = new StringBuilder();
+            byte[] a = text.getBytes("UTF-8");
+
+            for (char ch : text.toCharArray()) {
+                String elem = String.valueOf(ch);
+                try {
+//                    if (elem.equalsIgnoreCase("a")) {
+//                        textTemp.append("61");
+//                    } else if (elem.equalsIgnoreCase("à")) {
+//                        textTemp.append("B5");
+//                    } else if (elem.equalsIgnoreCase("ả")) {
+//                        textTemp.append("B6");
+//                    } else if (elem.equalsIgnoreCase("ã")) {
+//                        textTemp.append("B7");
+//                    } else if (elem.equalsIgnoreCase("á")) {
+//                        textTemp.append("B8");
+//                    } else if (elem.equalsIgnoreCase("ạ")) {
+//                        textTemp.append("B9");
+//                    } else {
+//                        textTemp.append("20");
+//                    }
+
+                    Object[][] charsetLib = CharsetESP.gmsCharsetLib;
+                    for (Object[] objects : charsetLib) {
+                        if (elem.equalsIgnoreCase(objects[0].toString())) {
+                            textTemp.append(objects[1].toString());
+                            break;
+                        } else if (elem.equalsIgnoreCase("\n")) {
+                            textTemp.append("0a");
+                            break;
+                        } else if (elem.equalsIgnoreCase("\r")) {
+                            textTemp.append("0d");
+                            break;
+                        } else {
+                            continue;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("Exception_ESPPCOMMAND", e + "");
+                }
+            }
+
+            int len = textTemp.length();
+            byte[] textBytes = new byte[len / 2];
+            for (int i = 0; i < len; i += 2) {
+                textBytes[i / 2] = (byte) ((Character.digit(textTemp.charAt(i), 16) << 4)
+                        + Character.digit(textTemp.charAt(i + 1), 16));
+            }
+
+//            byte[] textBytes = text.getBytes(this.charsetEncoding.getName());
             this.printerConnection.write(this.charsetEncoding.getCommand());
             //this.printerConnection.write(EscPosPrinterCommands.TEXT_FONT_A);
 
@@ -500,7 +555,7 @@ public class EscPosPrinterCommands {
 
             this.printerConnection.write(textBytes);
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new EscPosEncodingException(e.getMessage());
         }
@@ -628,9 +683,9 @@ public class EscPosPrinterCommands {
             return this;
         }
 
-        byte[][] bytesToPrint = this.useEscAsteriskCommand ? EscPosPrinterCommands.convertGSv0ToEscAsterisk(image) : new byte[][] {image};
+        byte[][] bytesToPrint = this.useEscAsteriskCommand ? EscPosPrinterCommands.convertGSv0ToEscAsterisk(image) : new byte[][]{image};
 
-        for(byte[] bytes : bytesToPrint) {
+        for (byte[] bytes : bytesToPrint) {
             this.printerConnection.write(bytes);
             this.printerConnection.send();
         }
@@ -689,10 +744,7 @@ public class EscPosPrinterCommands {
         try {
             byte[] textBytes = text.getBytes("UTF-8");
 
-            int
-                commandLength = textBytes.length + 3,
-                pL = commandLength % 256,
-                pH = commandLength / 256;
+            int commandLength = textBytes.length + 3, pL = commandLength % 256, pH = commandLength / 256;
 
             /*byte[] qrCodeCommand = new byte[textBytes.length + 7];
             System.arraycopy(new byte[]{0x1B, 0x5A, 0x00, 0x00, (byte)size, (byte)pL, (byte)pH}, 0, qrCodeCommand, 0, 7);
