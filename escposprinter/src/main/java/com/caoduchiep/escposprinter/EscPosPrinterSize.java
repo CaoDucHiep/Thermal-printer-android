@@ -88,8 +88,8 @@ public abstract class EscPosPrinterSize {
         boolean isSizeEdit = false;
         int bitmapWidth = bitmap.getWidth(),
                 bitmapHeight = bitmap.getHeight(),
-                maxWidth = 600,
-                maxHeight = 668;
+                maxWidth = 544,
+                maxHeight = 640;
 
         if (bitmapWidth > maxWidth) {
             bitmapHeight = Math.round(((float) bitmapHeight) * ((float) maxWidth) / ((float) bitmapWidth));
