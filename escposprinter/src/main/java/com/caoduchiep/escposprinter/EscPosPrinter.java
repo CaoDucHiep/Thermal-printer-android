@@ -172,7 +172,7 @@ public class EscPosPrinter extends EscPosPrinterSize {
         if (this.printer == null || this.printerNbrCharactersPerLine == 0) {
             return this;
         }
-
+//        this.printCharsetEncodingCharacters(28);
         this.printFormattedText(text, dotsFeedPaper);
         this.printer.cutPaper();
 
