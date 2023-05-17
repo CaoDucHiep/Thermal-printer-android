@@ -491,13 +491,13 @@ public class EscPosPrinterCommands {
 
                     Object[][] charsetLib = CharsetESP.gmsCharsetLib;
                     for (Object[] objects : charsetLib) {
-                        if (elem.equalsIgnoreCase(objects[0].toString())) {
+                        if (elem.equals(objects[0].toString())) {
                             textTemp.append(objects[1].toString());
                             break;
-                        } else if (elem.equalsIgnoreCase("\n")) {
+                        } else if (elem.equals("\n")) {
                             textTemp.append("0a");
                             break;
-                        } else if (elem.equalsIgnoreCase("\r")) {
+                        } else if (elem.equals("\r")) {
                             textTemp.append("0d");
                             break;
                         } else {
