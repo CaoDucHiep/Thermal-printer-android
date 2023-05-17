@@ -48,6 +48,7 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = "MainActivity_logger";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
 //        } catch (Exception e) {
 //            Log.d("elem_of_text", e + "");
 //        }
+
+        StringBuffer sb = new StringBuffer();
+        char ch[] = "ầ".toCharArray();
+        for (int i = 0; i < ch.length; i++) {
+            String hexString = Integer.toHexString(ch[i]);
+            sb.append(hexString);
+        }
+        String result = sb.toString();
+        Log.d(LOG_TAG, result);
     }
 
 
@@ -351,9 +361,28 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
-        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
+        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 48);
         return printer.addTextToPrint(
-                "[L]a à ả ã á ạ ă ằ ẳ ẵ ắ ặ â ầ ẩ ẫ ấ ậ b c d đ e è ẻ ẽ é ẹ ê ề ể ễ ế ệ f g h i ì ỉ ĩ í ị j k l m n o ò ỏ õ ó ọ ô ồ ổ ỗ ố ộ ơ ờ ở ỡ ớ ợ p q r s t u ù ủ ũ ú ụ ư ừ ử ữ ứ ự v w x y ỳ ỷ ỹ ý ỵ z\n" +
+//                "[L]a à ả ã á ạ ă ằ ẳ ẵ ắ ặ â ầ ẩ ẫ ấ ậ b c d đ e è ẻ ẽ é ẹ ê ề ể ễ ế ệ f g h i ì ỉ ĩ í ị j k l m n o ò ỏ õ ó ọ ô ồ ổ ỗ ố ộ ơ ờ ở ỡ ớ ợ p q r s t u ù ủ ũ ú ụ ư ừ ử ữ ứ ự v w x y ỳ ỷ ỹ ý ỵ z\n" +
+//                        "[L]\n" +
+//                        "[L]\n" +
+//                        "[L]\n" +
+//                        "[L]\n"
+                "[C]<b>CÔNG TY CỔ PHẦN QUỐC TẾ DU LỊCH HÒN DẤU</b>\n" +
+                        "[C]    <b>=====</b>\n" +
+                        "[C]<b><font size='tall'>VÉ VÀO KHU ĐÀ LẠT THU NHỎ</font></b>\n" +
+                        "[L] \n" +
+                        "[C]<b><font size='big'>Số 1</font></b>\n" +
+                        "[C]<b><font size='big'>Giá 80.000 VND/lượt</font></b>\n" +
+                        "[C]    (Tám mươi nghìn đồng)\n" +
+                        "[C]    (Đã bao gồm VAT)\n" +
+                        "[L] \n" +
+                        "[C]<b>Ngày 17 tháng 05 năm 2023</b>\n" +
+                        "[L] \n" +
+                        "[L]<font size='normal'>Ký hiệu: YYYQT</font>\n" +
+                        "[L]<font size='normal'>Mã CQT: M5-YYYQT-0000000001</font>\n" +
+                        "[L]\n" +
+                        "[C]Tra cứu: https://hdbk.pmbk.vn/tra-cuu-hoa-don/KJSAHCU8CS\n" +
                         "[L]\n" +
                         "[L]\n" +
                         "[L]\n" +

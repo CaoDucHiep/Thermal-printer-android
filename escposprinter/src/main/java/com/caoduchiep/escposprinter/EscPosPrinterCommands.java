@@ -470,8 +470,6 @@ public class EscPosPrinterCommands {
              * textTemp: Lưu lại byte[] chuỗi đã được mã hóa
              */
             StringBuilder textTemp = new StringBuilder();
-            byte[] a = text.getBytes("UTF-8");
-
             for (char ch : text.toCharArray()) {
                 String elem = String.valueOf(ch);
                 try {
@@ -506,6 +504,7 @@ public class EscPosPrinterCommands {
                             continue;
                         }
                     }
+//                    textTemp.append("AF");
                 } catch (Exception e) {
                     Log.d("Exception_ESPPCOMMAND", e + "");
                 }
@@ -513,6 +512,8 @@ public class EscPosPrinterCommands {
 
             int len = textTemp.length();
             byte[] textBytes = new byte[len / 2];
+
+//            Hàm chuyển đổi hexString sang byte[] => in bằng byte[]
             for (int i = 0; i < len; i += 2) {
                 textBytes[i / 2] = (byte) ((Character.digit(textTemp.charAt(i), 16) << 4)
                         + Character.digit(textTemp.charAt(i + 1), 16));
