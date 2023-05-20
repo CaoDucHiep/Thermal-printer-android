@@ -42,6 +42,7 @@ import com.caoduchiep.thermalprinter.async.AsyncUsbEscPosPrint;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
@@ -152,14 +153,17 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d("elem_of_text", e + "");
 //        }
 
-        StringBuffer sb = new StringBuffer();
-        char ch[] = "ầ".toCharArray();
-        for (int i = 0; i < ch.length; i++) {
-            String hexString = Integer.toHexString(ch[i]);
-            sb.append(hexString);
-        }
-        String result = sb.toString();
-        Log.d(LOG_TAG, result);
+//        String[] array = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+//        ArrayList<String> result = new ArrayList<String>();
+//        int count = 0;
+//        for (String str : array) {
+//            String strTmp = str;
+//            for (int i = 0; i < array.length; i++) {
+//                result.add("(byte) 0x" + str + array[i]);
+//            }
+//            count++;
+//        }
+//        Log.d("LOGCAT_MAIN", Arrays.toString(result.toArray()));
     }
 
 
@@ -234,21 +238,17 @@ public class MainActivity extends AppCompatActivity {
         } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, MainActivity.PERMISSION_BLUETOOTH_SCAN);
         } else {
-            new AsyncBluetoothEscPosPrint(
-                    this,
-                    new AsyncEscPosPrint.OnPrintFinished() {
-                        @Override
-                        public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
-                            Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
-                        }
+            new AsyncBluetoothEscPosPrint(this, new AsyncEscPosPrint.OnPrintFinished() {
+                @Override
+                public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
+                    Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
+                }
 
-                        @Override
-                        public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
-                            Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
-                        }
-                    }
-            )
-                    .execute(this.getAsyncEscPosPrinter(selectedDevice));
+                @Override
+                public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
+                    Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
+                }
+            }).execute(this.getAsyncEscPosPrinter(selectedDevice));
         }
     }
 
@@ -266,21 +266,17 @@ public class MainActivity extends AppCompatActivity {
                     UsbDevice usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                         if (usbManager != null && usbDevice != null) {
-                            new AsyncUsbEscPosPrint(
-                                    context,
-                                    new AsyncEscPosPrint.OnPrintFinished() {
-                                        @Override
-                                        public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
-                                            Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
-                                        }
+                            new AsyncUsbEscPosPrint(context, new AsyncEscPosPrint.OnPrintFinished() {
+                                @Override
+                                public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
+                                    Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
+                                }
 
-                                        @Override
-                                        public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
-                                            Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
-                                        }
-                                    }
-                            )
-                                    .execute(getAsyncEscPosPrinter(new UsbConnection(usbManager, usbDevice)));
+                                @Override
+                                public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
+                                    Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
+                                }
+                            }).execute(getAsyncEscPosPrinter(new UsbConnection(usbManager, usbDevice)));
                         }
                     }
                 }
@@ -293,19 +289,11 @@ public class MainActivity extends AppCompatActivity {
         UsbManager usbManager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
 
         if (usbConnection == null || usbManager == null) {
-            new AlertDialog.Builder(this)
-                    .setTitle("USB Connection")
-                    .setMessage("No USB printer found.")
-                    .show();
+            new AlertDialog.Builder(this).setTitle("USB Connection").setMessage("No USB printer found.").show();
             return;
         }
 
-        PendingIntent permissionIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                new Intent(MainActivity.ACTION_USB_PERMISSION),
-                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0
-        );
+        PendingIntent permissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(MainActivity.ACTION_USB_PERMISSION), android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0);
         IntentFilter filter = new IntentFilter(MainActivity.ACTION_USB_PERMISSION);
         registerReceiver(this.usbReceiver, filter);
         usbManager.requestPermission(usbConnection.getDevice(), permissionIntent);
@@ -320,33 +308,19 @@ public class MainActivity extends AppCompatActivity {
         final EditText portAddress = (EditText) this.findViewById(R.id.edittext_tcp_port);
 
         try {
-            new AsyncTcpEscPosPrint(
-                    this,
-                    new AsyncEscPosPrint.OnPrintFinished() {
-                        @Override
-                        public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
-                            Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
-                        }
+            new AsyncTcpEscPosPrint(this, new AsyncEscPosPrint.OnPrintFinished() {
+                @Override
+                public void onError(AsyncEscPosPrinter asyncEscPosPrinter, int codeException) {
+                    Log.e("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : An error occurred !");
+                }
 
-                        @Override
-                        public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
-                            Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
-                        }
-                    }
-            )
-                    .execute(
-                            this.getAsyncEscPosPrinter(
-                                    new TcpConnection(
-                                            ipAddress.getText().toString(),
-                                            Integer.parseInt(portAddress.getText().toString())
-                                    )
-                            )
-                    );
+                @Override
+                public void onSuccess(AsyncEscPosPrinter asyncEscPosPrinter) {
+                    Log.i("Async.OnPrintFinished", "AsyncEscPosPrint.OnPrintFinished : Print is finished !");
+                }
+            }).execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
         } catch (NumberFormatException e) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Invalid TCP port address")
-                    .setMessage("Port field must be an integer.")
-                    .show();
+            new AlertDialog.Builder(this).setTitle("Invalid TCP port address").setMessage("Port field must be an integer.").show();
             e.printStackTrace();
         }
     }
@@ -361,32 +335,13 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
-        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 48);
+        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
         return printer.addTextToPrint(
 //                "[L]a à ả ã á ạ ă ằ ẳ ẵ ắ ặ â ầ ẩ ẫ ấ ậ b c d đ e è ẻ ẽ é ẹ ê ề ể ễ ế ệ f g h i ì ỉ ĩ í ị j k l m n o ò ỏ õ ó ọ ô ồ ổ ỗ ố ộ ơ ờ ở ỡ ớ ợ p q r s t u ù ủ ũ ú ụ ư ừ ử ữ ứ ự v w x y ỳ ỷ ỹ ý ỵ z\n" +
 //                        "[L]\n" +
 //                        "[L]\n" +
 //                        "[L]\n" +
 //                        "[L]\n"
-                "[C]<b>CÔNG TY CỔ PHẦN QUỐC TẾ DU LỊCH HÒN DẤU</b>\n" +
-                        "[C]    <b>=====</b>\n" +
-                        "[C]<b><font size='tall'>VÉ VÀO KHU ĐÀ LẠT THU NHỎ</font></b>\n" +
-                        "[L] \n" +
-                        "[C]<b><font size='big'>Số 1</font></b>\n" +
-                        "[C]<b><font size='big'>Giá 80.000 VND/lượt</font></b>\n" +
-                        "[C]    (Tám mươi nghìn đồng)\n" +
-                        "[C]    (Đã bao gồm VAT)\n" +
-                        "[L] \n" +
-                        "[C]<b>Ngày 17 tháng 05 năm 2023</b>\n" +
-                        "[L] \n" +
-                        "[L]<font size='normal'>Ký hiệu: YYYQT</font>\n" +
-                        "[L]<font size='normal'>Mã CQT: M5-YYYQT-0000000001</font>\n" +
-                        "[L]\n" +
-                        "[C]Tra cứu: https://hdbk.pmbk.vn/tra-cuu-hoa-don/KJSAHCU8CS\n" +
-                        "[L]\n" +
-                        "[L]\n" +
-                        "[L]\n" +
-                        "[L]\n"
-        );
+                "[C]<b>CÔNG TY CỔ PHẦN QUỐC TẾ DU LỊCH HÒN DẤU</b>\n" + "[C]    <b>=====</b>\n" + "[C]<b><font size='tall'>VÉ VÀO KHU ĐÀ LẠT THU NHỎ</font></b>\n" + "[C]\n" + "[C]<b><font size='big'>Số 1</font></b>\n" + "[C]<b><font size='big'>Giá 80.000 VND/lượt</font></b>\n" + "[C]    (Tám mươi nghìn đồng)\n" + "[C]    (Đã bao gồm VAT)\n" + "[C]\n" + "[C]<b>Ngày 17 tháng 05 năm 2023</b>\n" + "[C]\n" + "[L]<font size='normal'>Ký hiệu: YYYQT</font>\n" + "[L]<font size='normal'>Mã CQT: M5-YYYQT-0000000001</font>\n" + "[C]\n" + "[C]Tra cứu: https://hdbk.pmbk.vn/tra-cuu-hoa-don/KJSAHCU8CS\n");
     }
 }

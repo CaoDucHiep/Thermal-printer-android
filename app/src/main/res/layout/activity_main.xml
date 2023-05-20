@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:digits="0123456789."
                 android:inputType="number"
-                android:text="192.168.31.99" />
+                android:text="192.168.31.200" />
 
             <TextView
                 android:layout_width="wrap_content"
