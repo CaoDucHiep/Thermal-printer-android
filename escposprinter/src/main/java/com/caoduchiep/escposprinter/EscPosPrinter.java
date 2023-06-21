@@ -86,7 +86,7 @@ public class EscPosPrinter extends EscPosPrinterSize {
      * @return Fluent interface
      */
     public EscPosPrinter printFormattedText(String text) throws EscPosConnectionException, EscPosParserException, EscPosEncodingException, EscPosBarcodeException {
-        return this.printFormattedText(text, 20f);
+        return this.printFormattedText(text, 10f);
     }
 
     /**
